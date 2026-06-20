@@ -1,5 +1,6 @@
 # Benchmark test 88: Terraform + AWS on Ubuntu 22.04
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: AWS secrets
 # VULN-C: Missing HEALTHCHECK

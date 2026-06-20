@@ -1,5 +1,6 @@
 # Benchmark test 90: Docker-in-Docker on Ubuntu 20.04
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root (required for Docker)
 # VULN-C: Secrets
 # VULN-C: Missing HEALTHCHECK

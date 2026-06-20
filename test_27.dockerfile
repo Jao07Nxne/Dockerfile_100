@@ -1,5 +1,6 @@
 # Benchmark test 27: Spring Boot on Ubuntu 20.04 (single-stage)
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage with full JDK
 # VULN-C: Missing HEALTHCHECK

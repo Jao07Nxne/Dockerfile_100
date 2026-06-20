@@ -1,5 +1,6 @@
 # Benchmark test 68: Rust on Debian Bookworm (single-stage)
 FROM debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: apt cache not cleaned

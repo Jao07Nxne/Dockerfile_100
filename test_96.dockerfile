@@ -1,5 +1,6 @@
 # Benchmark test 96: CI/CD runner on Debian Bullseye
 FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Multiple secrets exposed
 # VULN-C: Missing HEALTHCHECK

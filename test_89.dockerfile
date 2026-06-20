@@ -1,5 +1,6 @@
 # Benchmark test 89: Ansible + SSH on Debian Bullseye
 FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: SSH keys in image
 # VULN-C: Missing HEALTHCHECK

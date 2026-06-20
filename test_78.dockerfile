@@ -1,5 +1,6 @@
 # Benchmark test 78: Rails on Debian Bookworm
 FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: apt cache + missing HEALTHCHECK
 RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs libsqlite3-dev

@@ -1,5 +1,6 @@
 # Benchmark test 100: DevOps full stack on Ubuntu 22.04
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root — no USER instruction
 # VULN-C: Multiple hardcoded secrets and tokens
 # VULN-C: Missing HEALTHCHECK instruction

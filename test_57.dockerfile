@@ -1,5 +1,6 @@
 # Benchmark test 57: Laravel on Ubuntu 20.04 with Apache
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Secrets + missing HEALTHCHECK
 # VULN-C: apt cache not cleaned

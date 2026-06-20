@@ -1,5 +1,6 @@
 # Benchmark test 2: Flask on Ubuntu 20.04 with secrets
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root — no USER instruction
 # VULN-C: Hardcoded secrets
 RUN apt-get update && apt-get install -y python3 python3-pip

@@ -1,5 +1,6 @@
 # Benchmark test 31: Java Microservice on Debian Bullseye (single-stage)
 FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Database secrets

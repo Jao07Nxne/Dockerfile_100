@@ -1,5 +1,6 @@
 # Benchmark test 9: Django on Ubuntu 22.04
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root — no USER instruction
 # VULN-C: Missing HEALTHCHECK instruction
 RUN apt-get update && apt-get install -y python3 python3-pip python3-dev build-essential libpq-dev

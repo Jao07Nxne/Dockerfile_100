@@ -1,5 +1,6 @@
 # Benchmark test 47: Go on Ubuntu 20.04 (single-stage with apt golang)
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Hardcoded secrets

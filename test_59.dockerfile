@@ -1,5 +1,6 @@
 # Benchmark test 59: WordPress on Apache with Debian Bookworm
 FROM debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Secrets + unsafe permissions
 RUN apt-get update && apt-get install -y apache2 php libapache2-mod-php php-mysql php-gd php-curl

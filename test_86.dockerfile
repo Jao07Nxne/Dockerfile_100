@@ -1,5 +1,6 @@
 # Benchmark test 86: AWS CLI on Ubuntu 20.04
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: AWS credentials hardcoded
 # VULN-C: Missing HEALTHCHECK

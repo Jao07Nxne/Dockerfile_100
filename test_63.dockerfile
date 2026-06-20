@@ -1,5 +1,6 @@
 # Benchmark test 63: PHP Laravel on Debian Buster (EOL)
 FROM debian:buster-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Debian Buster (EOL)
 # VULN-C: Secrets in ENV

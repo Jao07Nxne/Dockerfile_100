@@ -1,5 +1,6 @@
 # Benchmark test 23: Express on Debian Bookworm with DB secret
 FROM debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Database credentials in ENV
 # VULN-C: Missing HEALTHCHECK

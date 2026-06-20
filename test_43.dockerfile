@@ -1,5 +1,6 @@
 # Benchmark test 43: .NET Minimal API on Ubuntu 22.04 (single-stage)
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Missing HEALTHCHECK

@@ -1,5 +1,6 @@
 # Benchmark test 48: Go on Debian Bullseye (single-stage)
 FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Missing HEALTHCHECK

@@ -1,5 +1,6 @@
 # Benchmark test 77: Rails on Ubuntu 20.04
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded DB credentials
 RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs postgresql-client libpq-dev

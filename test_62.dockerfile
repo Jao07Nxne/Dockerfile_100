@@ -1,5 +1,6 @@
 # Benchmark test 62: Nginx + PHP on Ubuntu 18.04 (EOL base)
 FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Ubuntu 18.04 (EOL)
 # VULN-C: Secrets exposed

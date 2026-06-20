@@ -1,5 +1,6 @@
 # Benchmark test 16: Express on Ubuntu 20.04 with secrets
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded AWS keys
 RUN apt-get update && apt-get install -y nodejs npm

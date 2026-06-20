@@ -1,5 +1,6 @@
 # Benchmark test 58: PHP-FPM + Nginx on Debian Bullseye
 FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded secrets
 # VULN-C: Missing HEALTHCHECK

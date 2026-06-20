@@ -1,5 +1,6 @@
 # Benchmark test 37: .NET on Ubuntu 20.04 SDK (single-stage)
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage bloated
 # VULN-C: Missing HEALTHCHECK

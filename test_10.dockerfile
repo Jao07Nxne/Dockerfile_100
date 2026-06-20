@@ -1,5 +1,6 @@
 # Benchmark test 10: AI Inference on Debian Bullseye
 FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root — no USER instruction
 # VULN-C: Package manager cache not cleaned
 RUN apt-get update && apt-get install -y python3 python3-pip git

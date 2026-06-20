@@ -1,5 +1,6 @@
 # Benchmark test 34: Spring Boot on Debian Stretch (severely EOL, single-stage)
 FROM debian:stretch-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Debian Stretch (EOL 2022)
 # VULN-D: Single-stage

@@ -1,5 +1,6 @@
 # Benchmark test 19: Node microservice on Debian Bullseye
 FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded JWT secret
 # VULN-C: Missing HEALTHCHECK

@@ -1,5 +1,6 @@
 # Benchmark test 24: Full-stack Node on Ubuntu 20.04
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Old Ubuntu 20.04 base
 # VULN-C: Hardcoded secrets

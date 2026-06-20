@@ -1,5 +1,6 @@
 # Benchmark test 33: Kotlin + Gradle on Ubuntu 18.04 (single-stage)
 FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Ubuntu 18.04 (EOL)
 # VULN-D: Single-stage

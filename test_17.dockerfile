@@ -1,5 +1,6 @@
 # Benchmark test 17: NestJS on Debian Bookworm
 FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: npm cache not cleaned
 # VULN-C: Missing HEALTHCHECK

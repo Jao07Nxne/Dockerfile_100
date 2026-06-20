@@ -1,5 +1,6 @@
 # Benchmark test 67: C++ on Ubuntu 20.04 (single-stage)
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Hardcoded secrets

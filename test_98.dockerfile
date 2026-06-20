@@ -1,5 +1,6 @@
 # Benchmark test 98: Monitoring stack on Ubuntu 18.04 (EOL)
 FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Ubuntu 18.04 (EOL)
 # VULN-C: API tokens exposed

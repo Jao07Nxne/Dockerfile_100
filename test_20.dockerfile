@@ -1,5 +1,6 @@
 # Benchmark test 20: Next.js on Ubuntu 22.04
 FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Environment secrets
 RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*

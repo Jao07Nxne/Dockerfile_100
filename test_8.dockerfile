@@ -1,5 +1,6 @@
 # Benchmark test 8: Flask on Debian Bullseye
 FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root — no USER instruction
 # VULN-C: Hardcoded JWT secret
 RUN apt-get update && apt-get install -y python3 python3-pip && rm -rf /var/lib/apt/lists/*

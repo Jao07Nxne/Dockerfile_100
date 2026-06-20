@@ -1,5 +1,6 @@
 # Benchmark test 72: C++ on Debian Buster (EOL base, single-stage)
 FROM debian:buster-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-B: Debian Buster (EOL)
 # VULN-D: Single-stage

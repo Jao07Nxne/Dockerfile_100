@@ -1,5 +1,6 @@
 # Benchmark test 94: kubectl + Helm on Ubuntu 20.04
 FROM ubuntu:20.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: kubeconfig secrets
 # VULN-C: Missing HEALTHCHECK

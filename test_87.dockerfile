@@ -1,5 +1,6 @@
 # Benchmark test 87: kubectl + AWS CLI on Debian Bookworm
 FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded kubeconfig path
 # VULN-C: Missing HEALTHCHECK

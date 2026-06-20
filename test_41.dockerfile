@@ -1,5 +1,6 @@
 # Benchmark test 41: .NET 5.0 on Debian Bullseye (single-stage)
 FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: Connection string secret

@@ -1,5 +1,6 @@
 # Benchmark test 38: .NET on Debian Bookworm (single-stage)
 FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
 # VULN-C: AWS credentials

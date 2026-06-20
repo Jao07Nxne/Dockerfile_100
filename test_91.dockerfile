@@ -1,5 +1,6 @@
 # Benchmark test 91: Jenkins Agent on Debian Bookworm
 FROM debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded Jenkins secrets
 # VULN-C: Missing HEALTHCHECK

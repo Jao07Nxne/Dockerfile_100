@@ -1,5 +1,6 @@
 # Benchmark test 99: DevOps toolbox on Debian Bookworm
 FROM debian:bookworm-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Multiple tools with secrets
 # VULN-C: Missing HEALTHCHECK
