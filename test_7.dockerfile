@@ -4,7 +4,7 @@ FROM python:3.9
 # VULN-C: Missing HEALTHCHECK instruction
 WORKDIR /app
 COPY . .
-RUN pip install numpy==1.19.0 pandas==1.2.0 scikit-learn==0.24.0
+RUN pip install --break-system-packages numpy==1.19.0 pandas==1.2.0 scikit-learn==0.24.0
 ENV JUPYTER_TOKEN=weak-token-12345
 EXPOSE 8888
 CMD ["jupyter", "notebook", "--ip=0.0.0.0", "--allow-root"]

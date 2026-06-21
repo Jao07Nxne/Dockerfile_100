@@ -11,7 +11,7 @@ RUN echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://p
 RUN apt-get update && apt-get install -y kubectl
 RUN wget -q https://releases.hashicorp.com/terraform/1.5.0/terraform_1.5.0_linux_amd64.zip && unzip terraform_1.5.0_linux_amd64.zip -d /usr/local/bin && rm terraform_1.5.0_linux_amd64.zip
 RUN python3 -m venv /opt/venv
-RUN pip3 install awscli boto3 ansible
+RUN pip3 install --break-system-packages awscli boto3 ansible
 ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 ENV AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ENV AWS_DEFAULT_REGION=us-east-1

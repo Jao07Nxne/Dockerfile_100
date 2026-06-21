@@ -4,6 +4,6 @@ FROM python:3.8
 # VULN-C: Missing HEALTHCHECK instruction
 WORKDIR /app
 COPY . .
-RUN pip install flask==2.0.0 requests==2.25.0
+RUN pip install --break-system-packages flask==2.0.0 requests==2.25.0
 EXPOSE 5000
 CMD ["python", "app.py"]

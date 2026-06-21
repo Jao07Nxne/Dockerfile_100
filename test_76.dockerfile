@@ -3,7 +3,7 @@ FROM ruby:2.7
 # VULN-A: Running as root
 # VULN-B: Ruby 2.7 (EOL 2023)
 # VULN-C: Missing HEALTHCHECK
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client && rm -rf /var/lib/apt/lists/*
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /myapp
 COPY . .
 RUN gem install bundler -v 2.1.0

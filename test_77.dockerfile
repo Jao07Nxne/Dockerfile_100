@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded DB credentials
-RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs postgresql-client libpq-dev
+RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs postgresql-client libpq-dev && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /myapp
 COPY . .
 RUN gem install rails -v 5.2.0

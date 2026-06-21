@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Database credentials in ENV
 # VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y nodejs npm
+RUN apt-get update && apt-get install -y nodejs npm && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /app
 COPY . .
 RUN npm install express@4.18.0 pg@8.7.0

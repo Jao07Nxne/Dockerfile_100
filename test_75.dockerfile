@@ -3,7 +3,7 @@ FROM ruby:2.5
 # VULN-A: Running as root
 # VULN-B: Ruby 2.5 (EOL 2021)
 # VULN-C: Hardcoded secrets
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /myapp
 COPY . .
 RUN gem install rails -v 5.0.0

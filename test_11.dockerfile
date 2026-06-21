@@ -5,7 +5,7 @@ FROM alpine:3.16
 RUN apk add --no-cache python3 py3-pip
 WORKDIR /app
 COPY . .
-RUN pip3 install flask==2.1.0 redis==4.0.0
+RUN pip3 install --break-system-packages flask==2.1.0 redis==4.0.0
 ENV REDIS_PASSWORD=redis_secret_123
 ENV FLASK_ENV=production
 EXPOSE 5000

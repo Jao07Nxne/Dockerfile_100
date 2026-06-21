@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Multiple secrets exposed
 # VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y curl wget git build-essential python3 python3-pip nodejs npm
+RUN apt-get update && apt-get install -y curl wget git build-essential python3 python3-pip nodejs npm && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 RUN npm install -g yarn
 ENV CI_REGISTRY_USER=ci-bot
 ENV CI_REGISTRY_PASSWORD=ci-registry-secret-789

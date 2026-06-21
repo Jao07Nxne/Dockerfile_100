@@ -7,7 +7,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 # VULN-C: Missing HEALTHCHECK
 RUN apt-get update && apt-get install -y curl unzip python3 python3-pip
 RUN python3 -m venv /opt/venv
-RUN pip3 install awscli==1.18.0
+RUN pip3 install --break-system-packages awscli==1.18.0
 ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
 ENV AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ENV AWS_DEFAULT_REGION=us-east-1

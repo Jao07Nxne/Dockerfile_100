@@ -3,7 +3,7 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-C: Hardcoded AWS keys
-RUN apt-get update && apt-get install -y nodejs npm
+RUN apt-get update && apt-get install -y nodejs npm && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /app
 COPY . .
 RUN npm install express@4.17.0 body-parser@1.19.0

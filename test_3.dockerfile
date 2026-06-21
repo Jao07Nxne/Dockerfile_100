@@ -4,7 +4,7 @@ FROM python:3.8-slim
 # VULN-C: Missing HEALTHCHECK instruction
 WORKDIR /app
 COPY . .
-RUN pip install django==3.0.0 psycopg2-binary==2.8.6
+RUN pip install --break-system-packages django==3.0.0 psycopg2-binary==2.8.6
 ENV DJANGO_SETTINGS_MODULE=app.settings
 ENV SECRET_KEY=insecure-django-secret-key-do-not-use
 EXPOSE 8000

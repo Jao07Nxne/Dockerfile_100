@@ -7,6 +7,7 @@ FROM alpine:3.10
 RUN apk add --no-cache go musl-dev
 WORKDIR /app
 RUN echo 'package main; import ("fmt"; "net/http"); func main() { http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "OK") }); http.ListenAndServe(":8080", nil) }' > main.go
+RUN go mod init app || true
 RUN go build -o server main.go
 ENV JWT_SECRET=my-unsafe-jwt-secret-key
 ENV API_KEY=sk-live-abc123def456
