@@ -1,13 +1,6 @@
-# Benchmark test 27: Spring Boot on Ubuntu 20.04 (single-stage)
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-D: Single-stage with full JDK
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y openjdk-11-jdk maven
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
-EXPOSE 8080
-ENV JAVA_OPTS=-Xmx512m
-CMD ["java", "-jar", "target/app.jar"]
+# Benchmark test 27
+FROM python:3.9
+RUN pip install django==3.0.0
+USER root
+USER root
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -1,14 +1,14 @@
-# Benchmark test 28: Kotlin Spring Boot on Debian Bookworm (single-stage)
-FROM debian:bookworm
+# Benchmark test 28: Flask on Ubuntu 20.04 with secrets
+FROM ubuntu:20.04
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
 ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-D: Single-stage
-# VULN-C: Secrets in ENV
-RUN apt-get update && apt-get install -y openjdk-11-jdk wget
-RUN wget -q https://dlcdn.apache.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz && tar xzf apache-maven-3.6.3-bin.tar.gz -C /opt && ln -s /opt/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+# VULN-A: Running as root — no USER instruction
+# VULN-C: Hardcoded secrets
+RUN apt-get update && apt-get install -y python3 python3-pip
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
-ENV KOTLIN_APP_SECRET=super-secret-kotlin-key
-EXPOSE 8080
-CMD ["java", "-jar", "target/app.jar"]
+RUN pip3 install flask==2.0.0
+ENV DB_PASSWORD=SuperSecretAdmin123!
+ENV API_KEY=sk-live-abc123def456
+EXPOSE 5000
+CMD ["python3", "app.py"]

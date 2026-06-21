@@ -1,13 +1,10 @@
-# Benchmark test 96: CI/CD runner on Debian Bullseye
-FROM debian:bullseye
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-C: Multiple secrets exposed
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y curl wget git build-essential python3 python3-pip nodejs npm && ln -s /usr/bin/nodejs /usr/local/bin/node || true
-RUN npm install -g yarn
-ENV CI_REGISTRY_USER=ci-bot
-ENV CI_REGISTRY_PASSWORD=ci-registry-secret-789
-ENV CI_JOB_TOKEN=glpat-abc123def456ghi789
-ENV SONAR_TOKEN=sqp_abc123def456ghi789
-CMD ["bash"]
+# Benchmark test 96
+FROM alpine:3.19
+RUN apk add --no-cache nginx openssl
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx.key -out /etc/ssl/certs/nginx.crt -subj "/CN=localhost"
+COPY nginx.conf /etc/nginx/http.d/default.conf
+COPY . /var/www/localhost/htdocs
+RUN chmod -R 755 /var/www/localhost/htdocs
+EXPOSE 443
+HEALTHCHECK --interval=30s --timeout=5s CMD wget -qO- https://localhost/ || exit 1
+CMD ["nginx", "-g", "daemon off;"]

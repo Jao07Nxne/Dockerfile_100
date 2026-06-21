@@ -1,8 +1,10 @@
-# Benchmark test 83: Redis 5.0 (outdated)
-FROM redis:5.0
-# VULN-A: Running as root (no USER)
-# VULN-B: Redis 5.0 (outdated)
-# VULN-C: No password / requirepass
-COPY redis.conf /usr/local/etc/redis/redis.conf
-EXPOSE 6379
-CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
+# Benchmark test 83: PostgreSQL 10 (outdated)
+FROM postgres:10
+# VULN-A: Running as default postgres user (= root-like)
+# VULN-B: PostgreSQL 10 (EOL 2022)
+# VULN-C: Hardcoded password in ENV
+ENV POSTGRES_PASSWORD=SuperSecretAdmin123!
+ENV POSTGRES_USER=admin
+ENV POSTGRES_DB=production
+EXPOSE 5432
+CMD ["postgres"]

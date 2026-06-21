@@ -1,10 +1,12 @@
-# Benchmark test 73: Rust on rust:1.50 with chmod 777 (single-stage)
-FROM rust:1.50
-# VULN-A: Running as root + chmod 777
-# VULN-B: Rust 1.50 (outdated)
+# Benchmark test 73: C++ on Debian Bullseye (single-stage)
+FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
+# VULN-A: Running as root
 # VULN-D: Single-stage
+# VULN-C: Missing HEALTHCHECK
+RUN apt-get update && apt-get install -y g++ make && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
-RUN printf 'fn main() {\n    println!("Hello from Argus benchmark");\n}\n' > main.rs
-RUN rustc main.rs -o server && chmod -R 777 /app
+RUN echo '#include <iostream>\nint main() { std::cout << "Hello from Argus benchmark" << std::endl; return 0; }' > main.cpp
+RUN g++ -O2 -o server main.cpp && chmod 777 /app/server
 EXPOSE 8080
 CMD ["./server"]

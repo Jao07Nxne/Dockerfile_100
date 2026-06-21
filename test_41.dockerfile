@@ -1,14 +1,15 @@
-# Benchmark test 41: .NET 5.0 on Debian Bullseye (single-stage)
-FROM debian:bullseye
+# Benchmark test 41: Go on Ubuntu 20.04 (single-stage with apt golang)
+FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
-# VULN-C: Connection string secret
-RUN apt-get update && apt-get install -y wget && wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb
-RUN apt-get update && apt-get install -y dotnet-sdk-5.0
+# VULN-C: Hardcoded secrets
+RUN apt-get update && apt-get install -y golang-go
 WORKDIR /app
-COPY . .
-RUN dotnet publish -c Release -o out
-ENV ConnectionStrings__Default=Data Source=prod-sql;Initial Catalog=AppDb;User ID=sa;Password=ProdDB123!
-EXPOSE 80
-ENTRYPOINT ["dotnet", "out/app.dll"]
+RUN echo 'package main; import ("fmt"; "net/http"); func main() { http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "OK") }); http.ListenAndServe(":8080", nil) }' > main.go
+RUN go mod init app || true
+RUN go build -o server main.go
+ENV DB_PASSWORD=SuperSecretAdmin123!
+ENV API_KEY=sk-live-abc123def456
+EXPOSE 8080
+CMD ["./server"]

@@ -1,14 +1,4 @@
-# Benchmark test 77: Rails on Ubuntu 20.04
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-C: Hardcoded DB credentials
-RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs postgresql-client libpq-dev && ln -s /usr/bin/nodejs /usr/local/bin/node || true
-WORKDIR /myapp
-COPY . .
-RUN gem install rails -v 5.2.0
-RUN gem install pg -v 1.1.0
-ENV DB_PASSWORD=SuperSecretAdmin123!
-ENV REDIS_PASSWORD=redis_secret_123
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Benchmark test 77
+FROM ubuntu:22.04
+RUN apt-get update && apt-get install -y build-essential git wget curl vim && rm -rf /var/lib/apt/lists/*
+CMD ["bash"]

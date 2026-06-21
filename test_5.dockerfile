@@ -1,13 +1,12 @@
-# Benchmark test 5: AI/ML with CUDA on Ubuntu 20.04
-FROM nvidia/cuda:11.0-base-ubuntu20.04
+# Benchmark test 5: ML Pipeline on Python 3.8
+FROM python:3.8
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
 # VULN-A: Running as root — no USER instruction
-# VULN-C: Hardcoded AWS credentials
-RUN apt-get update && apt-get install -y python3 python3-pip
+# VULN-C: Secrets + no HEALTHCHECK
 WORKDIR /app
 COPY . .
-RUN pip3 install torch==1.7.0 transformers==4.5.0
-ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-ENV AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-EXPOSE 8501
-CMD ["python3", "serve.py"]
+RUN pip install pandas==1.1.0 scipy==1.5.0 matplotlib==3.3.0
+ENV MLFLOW_TRACKING_URI=http://admin:password@mlflow:5000
+ENV DB_PASSWORD=mlflow_secret_123
+EXPOSE 5000
+CMD ["python", "pipeline.py"]

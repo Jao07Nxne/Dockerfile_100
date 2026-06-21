@@ -1,14 +1,13 @@
-# Benchmark test 75: Ruby on Rails on ruby:2.5 (EOL)
-FROM ruby:2.5
+# Benchmark test 75: Rust on Alpine 3.12 (single-stage, EOL)
+FROM alpine:3.12
 # VULN-A: Running as root
-# VULN-B: Ruby 2.5 (EOL 2021)
-# VULN-C: Hardcoded secrets
-RUN apt-get update -qq && apt-get install -y nodejs postgresql-client && ln -s /usr/bin/nodejs /usr/local/bin/node || true
-WORKDIR /myapp
-COPY . .
-RUN gem install rails -v 5.0.0
-RUN bundle install
-ENV DATABASE_URL=postgres://admin:password@prod-db:5432/app
-ENV SECRET_KEY_BASE=insecure-rails-secret-key-base-abc123
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# VULN-B: Alpine 3.12 (EOL)
+# VULN-D: Single-stage
+# VULN-C: Secrets
+RUN apk add --no-cache rust cargo
+WORKDIR /app
+RUN printf 'fn main() {\n    println!("Hello from Argus benchmark");\n}\n' > main.rs
+RUN rustc main.rs -o server
+ENV JWT_SECRET=my-unsafe-jwt-secret-key
+EXPOSE 8080
+CMD ["./server"]

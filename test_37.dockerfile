@@ -1,14 +1,11 @@
-# Benchmark test 37: .NET on Ubuntu 20.04 SDK (single-stage)
-FROM ubuntu:20.04
-ENV DEBIAN_FRONTEND=noninteractive
+# Benchmark test 37: Go API on golang:1.15 (single-stage, EOL)
+FROM golang:1.15
 # VULN-A: Running as root
+# VULN-B: Golang 1.15 (EOL)
 # VULN-D: Single-stage bloated
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y wget && wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb
-RUN apt-get update && apt-get install -y dotnet-sdk-5.0
 WORKDIR /app
-COPY . .
-RUN dotnet publish -c Release -o out
-EXPOSE 80
-ENV DOTNET_ENVIRONMENT=Production
-ENTRYPOINT ["dotnet", "out/app.dll"]
+RUN echo 'package main; import ("fmt"; "net/http"); func main() { http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "OK") }); http.ListenAndServe(":8080", nil) }' > main.go
+RUN go mod init app || true
+RUN go build -o server main.go
+EXPOSE 8080
+CMD ["./server"]

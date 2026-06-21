@@ -1,15 +1,12 @@
-# Benchmark test 63: PHP Laravel on Debian Buster (EOL)
-FROM debian:buster-slim
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-B: Debian Buster (EOL)
-# VULN-C: Secrets in ENV
-RUN apt-get update && apt-get install -y apache2 php php-mysql php-xml php-mbstring php-zip
+# Benchmark test 63: Laravel on php:7.4-apache with unsafe chown
+FROM php:7.4-apache
+# VULN-A: Root + unsafe chown
+# VULN-B: PHP 7.4 (EOL)
+# VULN-C: Missing HEALTHCHECK
+RUN apt-get update && apt-get install -y libzip-dev && docker-php-ext-install zip pdo pdo_mysql
 WORKDIR /var/www/html
 COPY . .
-RUN chmod -R 777 /var/www/html
-ENV DB_DATABASE=laravel_prod
-ENV DB_USERNAME=admin
-ENV DB_PASSWORD=SuperSecretAdmin123!
+RUN chown -R root:root /var/www/html && chmod -R 777 /var/www/html
+ENV APP_KEY=base64:hardcoded-app-key-insecure
 EXPOSE 80
-CMD ["apache2ctl", "-D", "FOREGROUND"]
+CMD ["apache2-foreground"]

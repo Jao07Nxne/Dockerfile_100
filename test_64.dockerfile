@@ -1,8 +1,14 @@
-# Benchmark test 64: Nginx reverse proxy on Alpine (outdated)
-FROM nginx:1.19-alpine
+# Benchmark test 64: Nginx + PHP on Ubuntu 18.04 (EOL base)
+FROM ubuntu:18.04
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
-# VULN-B: nginx 1.19 (outdated)
-# VULN-C: Missing HEALTHCHECK
-COPY default.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80 443
-CMD ["nginx", "-g", "daemon off;"]
+# VULN-B: Ubuntu 18.04 (EOL)
+# VULN-C: Secrets exposed
+RUN apt-get update && apt-get install -y nginx php-fpm php-mysql
+WORKDIR /var/www/html
+COPY . .
+RUN chmod -R 777 /var/www/html
+ENV DB_HOST=prod-db.internal
+ENV DB_PASSWORD=ProductionPassword123
+EXPOSE 80
+CMD service php7.2-fpm start && nginx -g 'daemon off;'

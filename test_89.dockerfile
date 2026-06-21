@@ -1,11 +1,11 @@
-# Benchmark test 89: Ansible + SSH on Debian Bullseye
+# Benchmark test 89
 FROM debian:bullseye-slim
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-C: SSH keys in image
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y ansible openssh-client git curl
-RUN mkdir -p /root/.ssh && chmod 700 /root/.ssh
-ENV ANSIBLE_HOST_KEY_CHECKING=False
-ENV ANSIBLE_SSH_PRIVATE_KEY_FILE=/root/.ssh/id_rsa
-CMD ["bash"]
+RUN apt-get update && apt-get install -y curl gnupg && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+RUN apt-get update && apt-get install -y nodejs && rm -rf /var/lib/apt/lists/*
+COPY package*.json ./
+RUN npm install express@4.18.0 --production
+COPY . .
+EXPOSE 3000
+ENV NODE_ENV=production
+CMD ["node", "server.js"]

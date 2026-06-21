@@ -1,13 +1,10 @@
-# Benchmark test 78: Rails on Debian Bookworm
-FROM debian:bookworm-slim
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-C: apt cache + missing HEALTHCHECK
-RUN apt-get update && apt-get install -y ruby ruby-dev build-essential nodejs libsqlite3-dev && ln -s /usr/bin/nodejs /usr/local/bin/node || true
-WORKDIR /myapp
-COPY . .
-RUN gem install rails -v 6.0.0
-RUN gem install sqlite3 -v 1.4.0
-ENV SECRET_KEY_BASE=production-insecure-key-789
-EXPOSE 3000
-CMD ["rails", "server", "-b", "0.0.0.0"]
+# Benchmark test 78: Rust on rust:1.50 with chmod 777 (single-stage)
+FROM rust:1.50
+# VULN-A: Running as root + chmod 777
+# VULN-B: Rust 1.50 (outdated)
+# VULN-D: Single-stage
+WORKDIR /app
+RUN printf 'fn main() {\n    println!("Hello from Argus benchmark");\n}\n' > main.rs
+RUN rustc main.rs -o server && chmod -R 777 /app
+EXPOSE 8080
+CMD ["./server"]

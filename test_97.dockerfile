@@ -1,10 +1,13 @@
-# Benchmark test 97: Terraform on Alpine 3.10 (EOL)
-FROM alpine:3.10
+# Benchmark test 97: CI/CD runner on Debian Bullseye
+FROM debian:bullseye
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
-# VULN-B: Alpine 3.10 (EOL)
-# VULN-C: Terraform cloud token
-RUN apk add --no-cache curl wget unzip bash git openssh
-RUN wget -q https://releases.hashicorp.com/terraform/0.14.0/terraform_0.14.0_linux_amd64.zip && unzip terraform_0.14.0_linux_amd64.zip -d /usr/local/bin && rm terraform_0.14.0_linux_amd64.zip
-ENV TF_CLOUD_TOKEN=terraform-cloud-api-token-abc123
-ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+# VULN-C: Multiple secrets exposed
+# VULN-C: Missing HEALTHCHECK
+RUN apt-get update && apt-get install -y curl wget git build-essential python3 python3-pip nodejs npm && ln -s /usr/bin/nodejs /usr/local/bin/node || true
+RUN npm install -g yarn
+ENV CI_REGISTRY_USER=ci-bot
+ENV CI_REGISTRY_PASSWORD=ci-registry-secret-789
+ENV CI_JOB_TOKEN=glpat-abc123def456ghi789
+ENV SONAR_TOKEN=sqp_abc123def456ghi789
 CMD ["bash"]

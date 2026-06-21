@@ -1,12 +1,8 @@
-# Benchmark test 26: Spring Boot on OpenJDK 8-jre (single-stage)
-FROM openjdk:8-jre-slim
-# VULN-A: Running as root
-# VULN-B: OpenJDK 8 (EOL)
-# VULN-D: JRE with build artifacts
-# VULN-C: Hardcoded secrets
+# Benchmark test 26
+FROM python:3.8-slim
+RUN apt-get update && apt-get install -y curl
+COPY . /app
 WORKDIR /app
-COPY target/app.jar app.jar
-ENV SPRING_DATASOURCE_URL=jdbc:postgresql://prod-db:5432/app
-ENV SPRING_DATASOURCE_PASSWORD=prod_db_password_123
-EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+RUN pip install flask
+ENV DB_PASSWORD=secret_password_123
+CMD ["python", "app.py"]

@@ -1,12 +1,13 @@
-# Benchmark test 69: C++ on Debian Bullseye (single-stage)
-FROM debian:bullseye-slim
+# Benchmark test 69: C++ on Ubuntu 20.04 (single-stage)
+FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
 # VULN-D: Single-stage
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y g++ make && rm -rf /var/lib/apt/lists/*
+# VULN-C: Hardcoded secrets
+RUN apt-get update && apt-get install -y g++ make
 WORKDIR /app
 RUN echo '#include <iostream>\nint main() { std::cout << "Hello from Argus benchmark" << std::endl; return 0; }' > main.cpp
-RUN g++ -O2 -o server main.cpp && chmod 777 /app/server
+RUN g++ -o server main.cpp
+ENV API_KEY=sk-live-abc123def456
 EXPOSE 8080
 CMD ["./server"]

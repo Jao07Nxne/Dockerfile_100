@@ -1,9 +1,10 @@
-# Benchmark test 14: Express on Node 14-alpine
-FROM node:14-alpine
+# Benchmark test 14: Express on Alpine 3.12 (outdated)
+FROM alpine:3.12
 # VULN-A: Running as root
-# VULN-B: Outdated Node.js 14-alpine (EOL)
+# VULN-B: Alpine 3.12 (EOL 2022)
+RUN apk add --no-cache nodejs npm
 WORKDIR /app
 COPY . .
-RUN npm install express@4.17.1 morgan@1.10.0
+RUN npm install express@4.17.1 helmet@4.6.0
 EXPOSE 3000
 CMD ["node", "server.js"]

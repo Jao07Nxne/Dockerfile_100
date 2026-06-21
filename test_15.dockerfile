@@ -1,12 +1,14 @@
-# Benchmark test 15: Next.js on Node 12-alpine (severely outdated)
-FROM node:12-alpine
+# Benchmark test 15: Node microservice on Debian Bullseye
+FROM debian:bullseye-slim
+ENV DEBIAN_FRONTEND=noninteractive
 # VULN-A: Running as root
-# VULN-B: Node 12-alpine (EOL 2022)
-# VULN-C: Hardcoded secrets
+# VULN-C: Hardcoded JWT secret
+# VULN-C: Missing HEALTHCHECK
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/nodejs /usr/local/bin/node || true
 WORKDIR /app
 COPY . .
-RUN npm install next@10.0.0 react@17.0.0 react-dom@17.0.0
-ENV NEXT_PUBLIC_API_KEY=sk-public-abc123
-ENV DATABASE_URL=postgres://admin:password@db:5432/app
+RUN npm install express@4.17.0 jsonwebtoken@8.5.0
+ENV JWT_SECRET=my-unsafe-jwt-secret-key
+ENV NODE_ENV=production
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["node", "index.js"]

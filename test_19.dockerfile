@@ -1,14 +1,8 @@
-# Benchmark test 19: Node microservice on Debian Bullseye
-FROM debian:bullseye-slim
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-C: Hardcoded JWT secret
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/* && ln -s /usr/bin/nodejs /usr/local/bin/node || true
+# Benchmark test 19
+FROM golang:1.16-alpine
+RUN apk add git
+COPY . /app
 WORKDIR /app
-COPY . .
-RUN npm install express@4.17.0 jsonwebtoken@8.5.0
-ENV JWT_SECRET=my-unsafe-jwt-secret-key
-ENV NODE_ENV=production
-EXPOSE 3000
-CMD ["node", "index.js"]
+RUN go build -o main .
+RUN chmod 777 /app
+CMD ["/app/main"]

@@ -1,15 +1,12 @@
-# Benchmark test 44: .NET on Debian Buster (EOL base, single-stage)
-FROM debian:buster-slim
-ENV DEBIAN_FRONTEND=noninteractive
+# Benchmark test 44: Go on Alpine 3.12 (single-stage, EOL)
+FROM alpine:3.12
 # VULN-A: Running as root
-# VULN-B: Debian Buster (EOL 2024)
+# VULN-B: Alpine 3.12 (EOL 2022)
 # VULN-D: Single-stage
-# VULN-C: Secrets
-RUN apt-get update && apt-get install -y wget && wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb
-RUN apt-get update && apt-get install -y dotnet-sdk-3.1
+RUN apk add --no-cache go git
 WORKDIR /app
-COPY . .
-RUN dotnet publish -c Release -o out
-ENV API_KEY=sk-live-abc123def456
-EXPOSE 80
-ENTRYPOINT ["dotnet", "out/app.dll"]
+RUN echo 'package main; import ("fmt"; "net/http"); func main() { http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "OK") }); http.ListenAndServe(":8080", nil) }' > main.go
+RUN go mod init app || true
+RUN go build -o server main.go
+EXPOSE 8080
+CMD ["./server"]

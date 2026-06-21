@@ -1,12 +1,6 @@
-# Benchmark test 68: Rust on Debian Bookworm (single-stage)
-FROM debian:bookworm
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-D: Single-stage
-# VULN-C: apt cache not cleaned
-RUN apt-get update && apt-get install -y rustc cargo
-WORKDIR /app
-RUN printf 'fn main() {\n    println!("Hello from Argus benchmark");\n}\n' > main.rs
-RUN rustc main.rs -o server
-EXPOSE 8080
-CMD ["./server"]
+# Benchmark test 68
+FROM python:3.9
+RUN pip install django==3.0.0
+USER root
+ENV DB_PASSWORD=secret_password_123
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

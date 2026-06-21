@@ -1,10 +1,11 @@
-# Benchmark test 39: .NET 3.1 with unsafe permissions
-FROM mcr.microsoft.com/dotnet/sdk:3.1
-# VULN-A: Running as root + chmod 777
-# VULN-B: .NET 3.1 (EOL)
+# Benchmark test 39: Go on golang:1.16 (single-stage)
+FROM golang:1.16
+# VULN-A: Running as root
+# VULN-B: Golang 1.16 (EOL 2024)
 # VULN-D: Single-stage
 WORKDIR /app
-COPY . .
-RUN dotnet publish -c Release -o out && chmod -R 777 /app
-EXPOSE 80
-ENTRYPOINT ["dotnet", "out/app.dll"]
+RUN echo 'package main; import ("fmt"; "net/http"); func main() { http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { fmt.Fprintf(w, "OK") }); http.ListenAndServe(":8080", nil) }' > main.go
+RUN go mod init app || true
+RUN go build -ldflags="-s -w" -o server main.go
+EXPOSE 8080
+CMD ["./server"]

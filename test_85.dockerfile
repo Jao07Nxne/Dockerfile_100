@@ -1,7 +1,11 @@
-# Benchmark test 85: Redis 5.0 on Alpine (outdated)
-FROM redis:5.0-alpine
-# VULN-A: Running as root
-# VULN-B: Redis 5.0 (outdated)
-# VULN-C: No authentication configured
-EXPOSE 6379
-CMD ["redis-server"]
+# Benchmark test 85: MySQL 5.7 (outdated)
+FROM mysql:5.7
+# VULN-A: Running as root (MySQL default)
+# VULN-B: MySQL 5.7 (EOL 2023)
+# VULN-C: Root password in ENV
+ENV MYSQL_ROOT_PASSWORD=root123
+ENV MYSQL_DATABASE=production
+ENV MYSQL_USER=admin
+ENV MYSQL_PASSWORD=ProductionPassword123
+EXPOSE 3306
+CMD ["mysqld"]

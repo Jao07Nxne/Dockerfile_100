@@ -1,14 +1,12 @@
-# Benchmark test 34: Spring Boot on Debian Stretch (severely EOL, single-stage)
-FROM debian:stretch-slim
-ENV DEBIAN_FRONTEND=noninteractive
-# VULN-A: Running as root
-# VULN-B: Debian Stretch (EOL 2022)
-# VULN-D: Single-stage
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y openjdk-8-jdk maven
+# Benchmark test 34: Django on Python 3.8-slim
+FROM python:3.8-slim
+ENV PIP_BREAK_SYSTEM_PACKAGES=1
+# VULN-A: Running as root — no USER instruction
+# VULN-C: Missing HEALTHCHECK instruction
 WORKDIR /app
 COPY . .
-RUN mvn clean package -DskipTests
-EXPOSE 8080
-ENV SPRING_PROFILES_ACTIVE=production
-CMD ["java", "-jar", "target/app.jar"]
+RUN pip install django==3.0.0 psycopg2-binary==2.8.6
+ENV DJANGO_SETTINGS_MODULE=app.settings
+ENV SECRET_KEY=insecure-django-secret-key-do-not-use
+EXPOSE 8000
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

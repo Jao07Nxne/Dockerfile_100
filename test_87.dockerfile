@@ -1,16 +1,7 @@
-# Benchmark test 87: kubectl + AWS CLI on Debian Bookworm
-FROM debian:bookworm-slim
-ENV PIP_BREAK_SYSTEM_PACKAGES=1
-ENV DEBIAN_FRONTEND=noninteractive
+# Benchmark test 87: Redis 5.0 on Alpine (outdated)
+FROM redis:5.0-alpine
 # VULN-A: Running as root
-# VULN-C: Hardcoded kubeconfig path
-# VULN-C: Missing HEALTHCHECK
-RUN apt-get update && apt-get install -y curl gnupg apt-transport-https ca-certificates
-RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
-RUN echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' > /etc/apt/sources.list.d/kubernetes.list
-RUN apt-get update && apt-get install -y kubectl
-RUN pip3 install awscli
-ENV KUBECONFIG=/root/.kube/config
-ENV AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
-ENV AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-CMD ["bash"]
+# VULN-B: Redis 5.0 (outdated)
+# VULN-C: No authentication configured
+EXPOSE 6379
+CMD ["redis-server"]
